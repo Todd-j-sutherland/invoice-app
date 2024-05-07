@@ -9,14 +9,45 @@ export default function NewInvoice() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const invoice = { clientName, debt, dueDate };
-    await fetch("/api/invoices", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(invoice),
-    });
+    const invoice = { clientName, debt: parseFloat(debt), dueDate };
+
+    const mutation = `
+      mutation AddInvoice($clientName: String!, $debt: Float!, $dueDate: String!) {
+        addInvoice(clientName: $clientName, debt: $debt, dueDate: $dueDate) {
+          id
+          clientName
+          debt
+          dateTime
+          dueDate
+          completed
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch("http://localhost:4000/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: mutation,
+          variables: invoice,
+        }),
+      });
+
+      const responseData = await response.json();
+      if (response.ok && responseData.data) {
+        console.log("Invoice added:", responseData.data);
+        // Handle successful response
+      } else {
+        // Handle errors from the server
+        console.error("GraphQL Errors:", responseData.errors);
+      }
+    } catch (error) {
+      console.error("Network Error:", error);
+      // Handle network errors
+    }
   }
 
   return (

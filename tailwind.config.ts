@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,13 +8,33 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      boxShadow: {
+        customShadow: "var(--customShadow)",
+        modalShadow: "var(--modalShadow)",
+      },
+      colors: {
+        background: "var(--background)",
+        nav: "var(--nav)",
+        modal: "var(--modal)",
+
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        blueishGrey: "var(--blueishGrey)",
+        lightBlueishGrey: "var(--lightBlueishGrey)",
+        darkGrey: "var(--darkGrey)",
+
+        themeToggler: "var(--themeToggler)",
+        popupBg: "var(--popupBg)",
+
+        // Button
+        baseBg: "var(--baseBg)",
+        baseBgHover: "var(--baseBgHover)",
+        defaultBg: "var(--defaultBg)",
+        defaultHoverBg: "var(--defaultHoverBg)",
+        grey: "var(--grey)",
+        greyHover: "var(--greyHover)",
       },
     },
   },
   plugins: [],
 };
-export default config;
