@@ -75,6 +75,7 @@ const Home = ({ searchParams }: HomeProps) => {
         currentUser={currentUser}
         numOfInvoices={invoices?.length}
       />
+      <div>ddddd{process.env.Google}</div>
       <div className="flex flex-col gap-3 overflow-y-auto">
         {invoices?.map((invoice, index) => (
           <InvoiceCard key={index} invoice={invoice} />
