@@ -8,17 +8,46 @@ export default function InvoiceDetail() {
   const { id } = router.query;
   const [invoice, setInvoice] = useState(null);
 
+  const query = `
+  query {
+    invoice {
+      id
+    }
+  }
+`;
+
   useEffect(() => {
     async function fetchInvoice() {
-      const response = await fetch(`/api/invoices/${id}`);
-      const data = await response.json();
-      setInvoice(data);
+      try {
+        const response = await fetch("http://localhost:4000/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }),
+        });
+
+        const responseData = await response.json();
+        if (response.ok && responseData.data) {
+          setInvoice(responseData.data.invoices);
+        } else {
+          throw new Error(
+            responseData.errors?.map((e) => e.message).join(", ") ||
+              "Error fetching invoice"
+          );
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        // setError(error.message);
+      } finally {
+        // setLoading(false);
+      }
     }
 
     if (id) {
       fetchInvoice();
     }
-  }, [id]);
+  }, [id, query]);
 
   if (!invoice) return <p>Loading...</p>;
 
