@@ -14,9 +14,9 @@ interface InvoiceCardProps {
 }
 
 const InvoiceCard: React.FC<InvoiceCardProps> = ({ invoice }) => {
-  const dueDate = add(new Date(invoice.invoiceDate), {
-    days: TERMS[invoice.paymentTerm],
-  });
+  // const dueDate = add(new Date(invoice.invoiceDate), {
+  //   days: TERMS[invoice.paymentTerm],
+  // });
 
   const status =
     invoice.status === "PENDING"
@@ -35,13 +35,13 @@ const InvoiceCard: React.FC<InvoiceCardProps> = ({ invoice }) => {
         {getShortId(invoice.id)}
       </div>
       <span className="text-[#7E88C3] dark:text-[#DFE3FA]">
-        Due {format(dueDate, "dd MMM yyyy")}
+        Due {format(Number(invoice.dueDate), "dd MMM yyyy")}
       </span>
       <span className="mb-6 sm:mb-0 col-start-2 row-start-1 justify-self-end sm:justify-self-start sm:col-auto sm:row-auto text-[#858BB2] dark:text-[#FFFFFF]">
         {invoice.clientName}
       </span>
       <span className="col-start-1 row-start-3 text-base font-bold sm:col-auto sm:row-auto md:pr-5 sm:justify-self-end">
-        $ {invoice.total}
+        $ {invoice.debt}
       </span>
       <StatusBadge status={status} />
       <span className="justify-center hidden sm:flex">
