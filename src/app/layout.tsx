@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/libs/providers/ThemeProvider";
 
 import { Providers } from "@/libs/redux/provider";
+import AuthProvider from "@/libs/providers/AuthProvider";
 
 import Navbar from "../components/navbar/Navbar";
 import LoginModal from "../components/modals/LoginModal";
@@ -71,19 +72,25 @@ export default async function RootLayout({
       <html className="bg-background" lang="en" suppressHydrationWarning>
         <body className={spartan.className}>
           <Providers>
-            <ToasterProvider />
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <RegisterModal />
-              <LoginModal />
-              <InvoiceModal />
-              <DeleteModal />
-              <Navbar />
-              <Container>
-                <main className="flex flex-col w-full h-full gap-14">
-                  {children}
-                </main>
-              </Container>
-            </ThemeProvider>
+            <AuthProvider>
+              <ToasterProvider />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <RegisterModal />
+                <LoginModal />
+                <InvoiceModal />
+                <DeleteModal />
+                <Navbar />
+                <Container>
+                  <main className="flex flex-col w-full h-full gap-14">
+                    {children}
+                  </main>
+                </Container>
+              </ThemeProvider>
+            </AuthProvider>
           </Providers>
         </body>
       </html>

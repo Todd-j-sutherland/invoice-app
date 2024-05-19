@@ -3,7 +3,10 @@ const nextConfig = {
   env: {
     API_URL:
       process.env.NODE_ENV === "production" ? "" : "http://localhost:4000",
-    Google: process.env.PASSWORD,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   async rewrites() {
     return [
